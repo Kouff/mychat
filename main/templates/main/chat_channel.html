@@ -1,0 +1,28 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Канал "{{ channel.name }}"
+{% endblock %}
+{% block body %}
+    <h1>Канал "{{ channel.name }}"</h1>
+    <a href="{% url 'channel_leave' channel.pk %}">Выйти с чат-канала</a><Br>
+    Участники ({{ opps.count }}) :
+    {% for opp in opps %}
+        <text> </text><a href="{% url 'person' opp.username %}">{{ opp.username }}</a>
+    {% endfor %}<Br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <textarea style="width: 400px; height: 100px; resize: none;" type="text" name="message_text"
+                  required></textarea><Br>
+        <input type="submit" value="Отправить сообщение">
+    </form><Br>
+    {% for message in messages %}
+        {% if message.author.username == user %}
+            <a href="{% url 'person' user %}"><strong>Вы</strong></a>: {{ message.date_send|date:'d.m.Y H:i:s' }}<Br>
+            {{ message.text }}<Br><Br>
+        {% else %}
+            <a href="{% url 'person' message.author.username %}"><strong>{{ message.author.username }}</strong></a>:
+            {{ message.date_send|date:'d.m.Y H:i:s' }}<Br>
+            {{ message.text }}<Br><Br>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

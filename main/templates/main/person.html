@@ -1,0 +1,38 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Профиль {{ person.username.capitalize }}
+{% endblock %}
+{% block body %}
+    <h1>Профиль {{ person.username.capitalize }}{% if not friend_request %}(это Вы){% endif %}</h1>
+    {{ online }}<Br>
+    Имя: {{ person.first_name.capitalize }}<Br>
+    Фамилия: {{ person.last_name.capitalize }}<Br>
+    {% if friend_request %}
+        <p>
+        <a href="{% url 'dialog_create' person.username %}">Написать сообщение</a><Br>
+            {% if friend_request == 1 %}
+                Пользователь у Вас в друзьях.<Br>
+                <a href="{% url 'friends_del' person.username %}">Удалить с друзей.</a>
+            {% else %}
+                <a href="{% url 'friends_add' person.username %}">Добавить в друзья</a>
+            {% endif %}
+        </p>
+    {% endif %}
+    <p>
+        <a href="{% url 'friends' person.username %}">Друзья:
+            {{ person.ownerfriends.member.all.count|default:"0" }}
+        </a>
+    <p>
+        {% for friend in person.ownerfriends.member.all|slice:":4" %}
+            <a href="{% url 'person' friend.username %}"> {{ friend.first_name.capitalize }}
+                ({{ friend.username.capitalize }}) {{ friend.last_name.capitalize }}</a><Br>
+        {% endfor %}
+        {% if person.ownerfriends.member.all.count > 4 %}
+            ...
+        {% endif %}
+    </p>
+    {% if person.ownerfriends.member.all %}
+        <a href="{% url 'friends' person.username %}">Все друзья {{ person.username.capitalize }}</a>
+    {% endif %}
+    </p>
+{% endblock %}

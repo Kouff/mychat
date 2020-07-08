@@ -1,0 +1,34 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Вход
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <h1>Вход</h1>
+    {% if request.error_message %}
+        <font color="red"><strong>Не удаётся войти.</strong></font><Br>
+        Пожалуйста, проверьте правильность написания <strong>ника</strong> и <strong>пароля</strong>.
+        <ul>
+            <li>Возможно, нажата клавиша <strong>Caps Lock</strong>?</li>
+            <li>Может быть, у Вас включена неправильная <strong>раскладка</strong>? (русская или английская)</li>
+            <li>Попробуйте набрать свой пароль в текстовом редакторе и <strong>скопировать</strong> в графу
+                «Пароль».
+            </li>
+        </ul><Br>
+    {% endif %}
+    {% if registration_username %}
+        <strong>{{ registration_username.capitalize }}</strong>, Вы успешно зарегистрировались!<Br>
+        Попробуйте войти в свою учетную запись.<Br><Br>
+
+    {% endif %}
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <label>Ник: </label>
+        <input type="text" value="{{ username }}" name="user_name" required pattern="^[a-zA-Z]+$"><Br>
+        <label>Пароль: </label>
+        <input type="password" name="user_password" required><Br>
+        <input type="submit" value="Войти">
+    </form>
+    <a href="{% url 'registration' %}">Зарегистрироваться</a>
+{% endblock %}

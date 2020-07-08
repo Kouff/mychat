@@ -1,0 +1,30 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Друзья {{ person.username.capitalize }}
+{% endblock %}
+{% block body %}
+    <h1>{% if user_is_owner %}Мои друзья{% else %}Друзья {{ person.username.capitalize }}{% endif %}</h1>
+    {% for friend in person.ownerfriends.member.all %}
+        <a href="{% url 'person' friend.username %}"> {{ friend.first_name.capitalize }}
+            ({{ friend.username.capitalize }}) {{ friend.last_name.capitalize }}</a><Br>
+        {% if user_is_owner %}
+            <a href="{% url 'dialog_create' friend.username %}">Написать сообщение</a><Br>
+            <a href="{% url 'friends_del' friend.username %}">Удалить {{ friend.username.capitalize }} с
+                друзей. </a><Br>
+        {% else %}
+            {% if friend in my_friends %}
+                <a href="{% url 'dialog_create' friend.username %}">Написать сообщение</a><Br>
+                Пользователь у Вас в друзьях.
+                <a href="{% url 'friends_del' friend.username %}">Удалить {{ friend.username.capitalize }} с друзей</a>
+                <Br>
+            {% elif friend.username == user %}
+                Это Вы.<Br>
+            {% else %}
+                <a href="{% url 'dialog_create' friend.username %}">Написать сообщение</a><Br>
+                <a href="{% url 'friends_add' friend.username %}"> Добавить {{ friend.username.capitalize }} в
+                    друзья.</a><Br>
+            {% endif %}
+        {% endif %}
+        <Br>
+    {% endfor %}
+{% endblock %}

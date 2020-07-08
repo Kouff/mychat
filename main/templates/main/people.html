@@ -1,0 +1,27 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Люди | Поиск друзей
+{% endblock %}
+{% block body %}
+    <h1>Люди</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" value="{{ search }}" name="search" required">
+        <input type="submit" value="Поиск"><Br><Br>
+    </form>
+    {% for person, mutual_friends in people %}
+        <a href="{% url 'person' person.username %}"> {{ person.first_name.capitalize }}
+            ({{ person.username.capitalize }}) {{ person.last_name.capitalize }}</a><Br>
+        <a href="{% url 'dialog_create' person.username %}">Написать сообщение</a><Br>
+        {% if person in friends %}
+            Пользователь у Вас в друзьях. У Вас с ним {{ mutual_friends }} общих друзей.<Br>
+            <a href="{% url 'friends_del' person.username %}">Удалить {{ person.username.capitalize }} с друзей</a>
+            <Br>
+        {% else %}
+            <a href="{% url 'friends_add' person.username %}"> Добавить в друзья.</a> У Вас с ним
+            {{ mutual_friends }}
+            общих друзей.<Br>
+        {% endif %}
+        <Br>
+    {% endfor %}
+{% endblock %}

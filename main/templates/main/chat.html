@@ -1,0 +1,52 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Чат
+{% endblock %}
+{% block head %}
+    {{ block.super }}
+    <a href="{% url 'channel_create' %}">Создать чат-канала</a>
+{% endblock %}
+{% block body %}
+    <h1>Чат</h1>
+    {% for chat,type in chats %}
+        {% if 'Dialog' in type %}
+            <a href="{% url 'dialog' chat.pk %}">Чат с
+                {% if chat.firstopp.username == user %}
+                    {{ chat.secondopp.username.capitalize }}
+                {% else %}
+                    {{ chat.firstopp.username.capitalize }}
+                {% endif %}
+            </a>
+            <text style="margin-left: 150px;">{{ chat.date_update|date:'d.m.Y H:i:s' }}</text><Br>
+            {% if chat.message_set.last %}
+                {% if chat.message_set.last.author.username == user %}
+                    <a href="{% url 'person' user %}"><strong>Вы</strong></a>: {{ chat.message_set.last.text|slice:":70" }}
+                {% else %}
+                    <a href="{% url 'person' chat.message_set.last.author.username %}"><strong>{{ chat.message_set.last.author.username }}</strong></a>:
+                    {{ chat.message_set.last.text|slice:":70" }}
+                {% endif %}
+            {% else %}
+                Сообщений нету.
+            {% endif %}
+            <Br>
+            <a href="{% url 'dialog' chat.pk %}">Открыть чат</a>
+            <Br><Br><Br>
+        {% else %}
+            <a href="{% url 'channel' chat.pk %}">Канал "{{ chat.name }}"</a>
+            <text style="margin-left: 150px;">{{ chat.date_update|date:'d.m.Y H:i:s' }}</text><Br>
+            {% if chat.message_set.last %}
+                {% if chat.message_set.last.author.username == user %}
+                    <a href="{% url 'person' user %}"><strong>Вы</strong></a>: {{ chat.message_set.last.text|slice:":70" }}
+                {% else %}
+                    <a href="{% url 'person' chat.message_set.last.author.username %}"><strong>{{ chat.message_set.last.author.username }}</strong></a>:
+                    {{ chat.message_set.last.text|slice:":70" }}
+                {% endif %}
+            {% else %}
+                Сообщений нету.
+            {% endif %}
+            <Br>
+            <a href="{% url 'channel' chat.pk %}">Открыть чат</a>
+            <Br><Br><Br>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

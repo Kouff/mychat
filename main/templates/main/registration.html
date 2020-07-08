@@ -1,0 +1,35 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Регистрация нового пользователя
+{% endblock %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <h1>Регистрация</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label>Ник: </label>
+        <input type="text" value="{{ username }}" name="user_name" required pattern="^[a-zA-Z]+$">
+        {% if error_message_username %}
+            <font color="red">Ник {{ error_message_username }} уже занят. Выберите другой ник.</font>
+        {% endif %}
+        <Br>
+        <label>Имя: </label>
+        <input type="text" value="{{ userfirstname }}" name="user_first_name" required pattern="^[a-zA-Zа-яА-ЯіІ]+$">
+        <Br>
+        <label>Фамилия: </label>
+        <input type="text" value="{{ userlastname }}" name="user_last_name" required pattern="^[a-zA-Zа-яА-ЯіІ]+$">
+        <Br>
+        <label>Пароль: </label>
+        <input type="password" name="user_password" required>
+        <Br>
+        <label>Повторите пароль: </label>
+        <input type="password" name="user_password2" required>
+        {% if error_message_password %}
+            <font color="red">Оба введенных пароля должны быть идентичны!</font>
+        {% endif %}
+        <Br>
+        <input type="submit" value="Зарегистрироваться">
+    </form>
+    <a href="{% url 'login' %}">Вход</a>
+{% endblock %}

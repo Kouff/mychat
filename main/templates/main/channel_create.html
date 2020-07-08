@@ -1,0 +1,19 @@
+{% extends 'basic.html' %}
+{% block title %}
+    Создание чат-канала
+{% endblock %}
+{% block body %}
+    <h1>Создание чат-канала</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label>Имя чат-канала: </label><Br>
+        <input type="text" name="channel_name" required><Br>
+        <label>Участники: </label><Br>
+        <select multiple size="{{ select_size }}" name="opps" required>
+            {% for friend in friends %}
+                <option value="{{ friend.pk }}">{{ friend.username }}</option>
+            {% endfor %}
+        </select><Br>
+        <input type="submit" value="Создать чат-канал">
+    </form>
+{% endblock %}
