@@ -94,7 +94,7 @@ def create_message(self, type):
     if type == 'dialog':
         Message.objects.create(text=self.request.POST['message_text'], author=self.request.user, dialog=chat)
     else:
-        Message.objects.create(text=self.request.POST['message_text'], author=self.request.user, dialog=chat)
+        Message.objects.create(text=self.request.POST['message_text'], author=self.request.user, channel=chat)
     chat.date_update = timezone.now()
     chat.save()
 
