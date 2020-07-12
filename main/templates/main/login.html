@@ -6,13 +6,13 @@
 {% endblock %}
 {% block body %}
     <h1>Вход</h1>
-    {% if request.error_message %}
+    {% if error_message %}
         <font color="red"><strong>Не удаётся войти.</strong></font><Br>
         Пожалуйста, проверьте правильность написания <strong>ника</strong> и <strong>пароля</strong>.
         <ul>
             <li>Возможно, нажата клавиша <strong>Caps Lock</strong>?</li>
             <li>Может быть, у Вас включена неправильная <strong>раскладка</strong>? (русская или английская)</li>
-            <li>Попробуйте набрать свой пароль в текстовом редакторе и <strong>скопировать</strong> в графу
+            <li>Попробуйте набрать свой пароль в текстовом редакторе и <strong>скопировать</strong> в поле
                 «Пароль».
             </li>
         </ul><Br>

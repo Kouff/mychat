@@ -9,8 +9,8 @@
         <input type="submit" value="Отправить сообщение">
     </form><Br>
     {% for message in messages %}
-        {% if message.author.username == user %}
-            <a href="{% url 'person' user %}"><strong>Вы</strong></a>: {{ message.date_send|date:'d.m.Y H:i:s' }}<Br>
+        {% if message.author.username == current_user %}
+            <a href="{% url 'person' current_user %}"><strong>Вы</strong></a>: {{ message.date_send|date:'d.m.Y H:i:s' }}<Br>
             {{ message.text }}<Br><Br>
         {% else %}
             <a href="{% url 'person' message.author.username %}"><strong>{{ message.author.username }}</strong></a>: {{ message.date_send|date:'d.m.Y H:i:s' }}<Br>

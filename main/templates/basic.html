@@ -9,10 +9,10 @@
 <body>
 {% block head %}
     <div>
-        <a href="{% url 'logout' %}">Выйти ({{ user }})</a>
+        <a href="{% url 'logout' %}">Выйти ({{ current_user }})</a>
         <a href="{% url 'people' %}">Люди</a>
-        <a href="{% url 'person' user %}">Профиль</a>
-        <a href="{% url 'friends' user %}">Друзья</a>
+        <a href="{% url 'person' current_user %}">Профиль</a>
+        <a href="{% url 'friends' current_user %}">Друзья</a>
         <a href="{% url 'chat' %}">Чат</a>
         <Br>
     </div>

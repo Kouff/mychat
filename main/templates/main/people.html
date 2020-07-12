@@ -4,23 +4,26 @@
 {% endblock %}
 {% block body %}
     <h1>Люди</h1>
-    <form action="" method="post">
-        {% csrf_token %}
+    <form action="" method="get">
         <input type="text" value="{{ search }}" name="search" required">
         <input type="submit" value="Поиск"><Br><Br>
     </form>
-    {% for person, mutual_friends in people %}
+    {% for person, mutual_friends in user_list %}
         <a href="{% url 'person' person.username %}"> {{ person.first_name.capitalize }}
             ({{ person.username.capitalize }}) {{ person.last_name.capitalize }}</a><Br>
         <a href="{% url 'dialog_create' person.username %}">Написать сообщение</a><Br>
         {% if person in friends %}
             Пользователь у Вас в друзьях. У Вас с ним {{ mutual_friends }} общих друзей.<Br>
-            <a href="{% url 'friends_del' person.username %}">Удалить {{ person.username.capitalize }} с друзей</a>
-            <Br>
+            <form action="{% url 'friends_update' person.username %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Удалить {{ person.username.capitalize }} с друзей."><Br>
+            </form>
         {% else %}
-            <a href="{% url 'friends_add' person.username %}"> Добавить в друзья.</a> У Вас с ним
-            {{ mutual_friends }}
-            общих друзей.<Br>
+            У Вас с ним {{ mutual_friends }} общих друзей.
+            <form action="{% url 'friends_update' person.username %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Добавить {{ person.username.capitalize }} в друзья."><Br>
+            </form>
         {% endif %}
         <Br>
     {% endfor %}

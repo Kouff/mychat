@@ -1,4 +1,6 @@
+*.sqlite3
 /main/migrations/*
 !/main/migrations/__init__.py
 !/main/migrations/0001_initial.py
 .idea/
+mychatenv/
