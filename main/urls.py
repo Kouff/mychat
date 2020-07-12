@@ -4,7 +4,7 @@ from .views import *
 urlpatterns = [
     path('chat/', ListChat.as_view(), name='chat'),
     path('chat/dialog/<int:pk>/', DialogDetailView.as_view(), name='dialog'),
-    path('chat/channel/<int:pk>/', DialogChannelView.as_view(), name='channel'),
+    path('chat/channel/<int:pk>/', ChannelDetailView.as_view(), name='channel'),
     path('chat/channel_create/', ChannelCreateView.as_view(), name='channel_create'),
     path('chat/channel_leave/<int:pk>/', channel_leave_chat, name='channel_leave'),
     path('chat/dialog_create/<slug:username>/', DialogCreateView.as_view(), name='dialog_create'),

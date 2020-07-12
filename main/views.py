@@ -157,12 +157,12 @@ class DialogDetailView(MemberPermissionsMixin, DetailView):
         return context
 
 
-class DialogChannelView(MemberPermissionsMixin, DetailView):
+class ChannelDetailView(MemberPermissionsMixin, DetailView):
     model = Channel
     template_name = 'main/chat_channel.html'
 
     def post(self, *args, **kwargs):
-        service.create_message(self, 'dialog')
+        service.create_message(self, 'channel')
         return self.get(self)
 
     def get_context_data(self, **kwargs):
